@@ -6,7 +6,8 @@ using System.Text;
 using KSPPluginFramework;
 using UnityEngine;
 /// <summary>
-/// hello world
+/// hello world test 2
+/// test2
 /// </summary>
 namespace MBExtended
 {
@@ -24,6 +25,9 @@ namespace MBExtended
             StartRepeatingWorker(1);
         }
 
+        /// <summary>
+        /// sdfsdgfdhhd
+        /// </summary>
         private Int32 intCounter=0;
         internal override void RepeatingWorker()
         {
