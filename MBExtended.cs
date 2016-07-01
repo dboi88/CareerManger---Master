@@ -11,7 +11,7 @@ using UnityEngine;
 /// </summary>
 namespace MBExtended
 {
-    [KSPAddon(KSPAddon.Startup.MainMenu,false)]
+    [KSPAddon(KSPAddon.Startup.MainMenu,true)]
     public class MBExtended : MonoBehaviourExtended
     {
         internal override void Awake()
@@ -23,6 +23,7 @@ namespace MBExtended
 
             //Start the repeating worker to fire once each second
             StartRepeatingWorker(1);
+            DontDestroyOnLoad(this);
         }
 
         /// <summary>
