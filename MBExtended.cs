@@ -11,7 +11,7 @@ using UnityEngine;
 /// </summary>
 namespace MBExtended
 {
-    [KSPAddon(KSPAddon.Startup.MainMenu,false)]
+    [KSPAddon(KSPAddon.Startup.MainMenu,true)]
     public class MBExtended : MonoBehaviourExtended
     {
         internal override void Awake()
