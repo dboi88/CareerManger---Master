@@ -23,6 +23,7 @@ namespace MBExtended
 
             //Start the repeating worker to fire once each second
             StartRepeatingWorker(1);
+            DontDestroyOnLoad(this);
         }
 
         /// <summary>
