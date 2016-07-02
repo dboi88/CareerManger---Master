@@ -5,10 +5,7 @@ using System.Text;
 
 using KSPPluginFramework;
 using UnityEngine;
-/// <summary>
-/// hello world test 2
-/// test2
-/// </summary>
+
 namespace CareerManager
 {
     [KSPAddon(KSPAddon.Startup.MainMenu,true)]
