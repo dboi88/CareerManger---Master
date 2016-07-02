@@ -6,6 +6,9 @@ using System.Text;
 using KSPPluginFramework;
 using UnityEngine;
 
+/// <summary>
+/// branchtest
+/// </summary>
 namespace CareerManager
 {
     [KSPAddon(KSPAddon.Startup.MainMenu,true)]
