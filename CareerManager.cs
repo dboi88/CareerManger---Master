@@ -5,14 +5,11 @@ using System.Text;
 
 using KSPPluginFramework;
 using UnityEngine;
-/// <summary>
-/// hello world test 2
-/// test2
-/// </summary>
-namespace MBExtended
+
+namespace CareerManager
 {
     [KSPAddon(KSPAddon.Startup.MainMenu,true)]
-    public class MBExtended : MonoBehaviourExtended
+    public class CareerManager : MonoBehaviourExtended
     {
         internal override void Awake()
         {

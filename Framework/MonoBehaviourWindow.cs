@@ -124,31 +124,34 @@ namespace KSPPluginFramework
         /// </summary>
         internal RectOffset ClampToScreenOffset = new RectOffset(0, 0, 0, 0);
 
+        /// <summary>
+        /// remove this section as renderingmanger no longer in use, will need to somepoint use another method
+        /// </summary>
         private Boolean _Visible;
         /// <summary>
         /// Whether the Window is visible or not. Changing this value will add/remove the window from the RenderingManager.PostDrawQueue
         /// </summary>
-        internal Boolean Visible
-        {
-            get { return _Visible; }
-            set
-            {
-                if (_Visible != value)
-                {
-                    if (value)
-                    {
-                        LogFormatted_DebugOnly("Adding Window to PostDrawQueue-{0}", WindowID);
-                        RenderingManager.AddToPostDrawQueue(5, this.DrawGUI);
-                    }
-                    else
-                    {
-                        LogFormatted_DebugOnly("Removing Window from PostDrawQueue", WindowID);
-                        RenderingManager.RemoveFromPostDrawQueue(5, this.DrawGUI);
-                    }
-                }
-                _Visible = value;
-            }
-        }
+        internal Boolean Visible = true;
+        ///{
+            ///get { return _Visible; }
+            ///set
+            ///{
+               /// if (_Visible != value)
+                ///{
+                   /// if (value)
+                    ///{
+                      ///  LogFormatted_DebugOnly("Adding Window to PostDrawQueue-{0}", WindowID);
+                      ///  RenderingManager.AddToPostDrawQueue(5, this.DrawGUI);
+                   /// }
+                   /// else
+                  ///  {
+                    ///    LogFormatted_DebugOnly("Removing Window from PostDrawQueue", WindowID);
+                   ///     RenderingManager.RemoveFromPostDrawQueue(5, this.DrawGUI);
+                  ///  }
+              ///  }
+              ///  _Visible = value;
+           /// }
+       /// }
 
         /// <summary>
         /// This is the Code that draws the window and sets the skin
