@@ -57,7 +57,7 @@
     <Compile Include="Framework\MonoBehaviourExtended.cs" />
     <Compile Include="Framework\MonoBehaviourWindow.cs" />
     <Compile Include="Framework\SkinsLibrary.cs" />
-    <Compile Include="MBExtended.cs" />
+    <Compile Include="CareerManager.cs" />
     <Compile Include="MBWindow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
