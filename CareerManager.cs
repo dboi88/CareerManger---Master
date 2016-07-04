@@ -6,9 +6,6 @@ using System.Text;
 using KSPPluginFramework;
 using UnityEngine;
 
-/// <summary>
-/// branchtest
-/// </summary>
 namespace CareerManager
 {
     [KSPAddon(KSPAddon.Startup.MainMenu,true)]
@@ -26,9 +23,14 @@ namespace CareerManager
             DontDestroyOnLoad(this);
         }
 
-        /// <summary>
-        /// sdfsdgfdhhd
-        /// </summary>
+
+
+
+
+
+
+
+
         private Int32 intCounter=0;
         internal override void RepeatingWorker()
         {

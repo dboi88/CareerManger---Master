@@ -3,3 +3,6 @@ C:\Users\Winston\Documents\Visual Studio 2015\Projects\CareerManager - Master\Ou
 C:\Users\Winston\Documents\Visual Studio 2015\Projects\CareerManager - Master\CareerManger - Master\obj\Debug\CareerManager.csprojResolveAssemblyReference.cache
 C:\Users\Winston\Documents\Visual Studio 2015\Projects\CareerManager - Master\CareerManger - Master\obj\Debug\MBExtended.dll
 C:\Users\Winston\Documents\Visual Studio 2015\Projects\CareerManager - Master\CareerManger - Master\obj\Debug\MBExtended.pdb
+C:\Users\Winston\Documents\Visual Studio 2015\Projects\CareerManager - Master\CareerManger---Master\obj\Debug\CareerManager.csprojResolveAssemblyReference.cache
+C:\Users\Winston\Documents\Visual Studio 2015\Projects\CareerManager - Master\CareerManger---Master\obj\Debug\MBExtended.dll
+C:\Users\Winston\Documents\Visual Studio 2015\Projects\CareerManager - Master\CareerManger---Master\obj\Debug\MBExtended.pdb
