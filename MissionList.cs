@@ -21,6 +21,16 @@ namespace MissionList
         /// create add mission window draw value
         public bool drawaddmission = false;
 
+        protected bool Getdrawaddmission()
+        {
+            if (drawaddmission)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
 
         internal override void Awake()
         {
@@ -32,9 +42,9 @@ namespace MissionList
         }
 
 
-
         internal override void Update()
         {
+            LogFormatted("" + drawaddmission);
         }
 
         internal override void LateUpdate()
@@ -54,7 +64,7 @@ namespace MissionList
                 HighLogic.LoadedScene == GameScenes.SPACECENTER ||
                 HighLogic.LoadedScene == GameScenes.TRACKSTATION)
             {
-                Debug.Log(HighLogic.LoadedScene);
+                ///Debug.Log(HighLogic.LoadedScene);
                 _missionlistPosition = GUILayout.Window(02, _missionlistPosition, OnWindow, "Mission List");
 
                 if (_missionlistPosition.x == 0f && -_missionlistPosition.y == 0f)
@@ -96,6 +106,15 @@ namespace MissionList
             if (GUILayout.Button("Add Mission"))
             {
                 drawaddmission = true;
+                LogFormatted("on button press " + drawaddmission);
+            }
+            if (GUILayout.Button("make addmission window false"))
+            {
+                drawaddmission = false;
+            }
+            if (GUILayout.Button("make addmission window true"))
+            {
+                drawaddmission = true;
             }
 
             GUI.DragWindow();
@@ -118,7 +137,8 @@ namespace MissionList
     {
         // create window position object as a new rect value
         private static Rect _addmissionwindowPosition = new Rect();
-
+        /// create string to show in add mission text box on first load
+        private string addmissionstring = "Mission Name";
 
 
         internal override void Awake()
@@ -128,23 +148,23 @@ namespace MissionList
 
         }
 
+
         internal override void Update()
         {
-            
+            LogFormatted("" + Getdrawaddmission());
         }
 
         void OnGUI()
         {
             {
-                LogFormatted("Mission draw admission = true");
                 OnDrawAddMission();
             }
         }
 
         public void OnDrawAddMission()
         {
-            LogFormatted("OnDrawAddMission = fired");
-            if (drawaddmission == true)
+            ///LogFormatted("OnDrawAddMission = fired" + drawaddmission);
+            if (Getdrawaddmission())
             {
                 LogFormatted("OnDrawAddMission = true & fired");
                 _addmissionwindowPosition = GUILayout.Window(03, _addmissionwindowPosition, OnWindow, "Title");
@@ -154,8 +174,18 @@ namespace MissionList
             }
         }
 
-        private void OnWindow(int windowId)
+        public void OnWindow(int windowId)
         {
+            addmissionstring = GUILayout.TextField(addmissionstring, 25);
+            if (GUILayout.Button("Add Mission"))
+            {
+                drawaddmission = false;
+                Debug.Log(addmissionstring);
+                missionlist.Add(addmissionstring);
+                addmissionstring = "Mission Name";
+            }
+
+
             GUI.DragWindow();
         }
     }
