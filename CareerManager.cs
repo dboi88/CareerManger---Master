@@ -9,6 +9,9 @@ using KSP;
 
 namespace CareerManager
 {
+    /// <summary>
+    /// launch the main plug in code here using KSP addon, everying else should be a child of this
+    /// </summary>
     [KSPAddon(KSPAddon.Startup.MainMenu, true)]
     public class _CareerManager : MonoBehaviourExtended
     {
@@ -26,10 +29,12 @@ namespace CareerManager
 
         internal override void Awake()
         {
-            LogFormatted("Parent is awake");
+            LogFormatted("Parent is awake - Career Manager");
 
+            /// create mission list GUI as child
             var _Child_MissionList = gameObject.AddComponent<MissionList._MissionList>();
             LogFormatted("_Child_MissionList created");
+            /// create add mission GUI as child
             var _Child_AddMissionWindow = gameObject.AddComponent<MissionList._AddMissionWindow>();
             LogFormatted("_Child_AddMissionWindow created");
 

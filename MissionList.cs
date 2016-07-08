@@ -116,6 +116,7 @@ namespace MissionList
 
 
     ///[KSPAddon(KSPAddon.Startup.MainMenu, true)]
+    ///not using this as this class is now started as a child of CareerManager
     public class _AddMissionWindow : _MissionList
     {
         // create window position object as a new rect value
@@ -127,6 +128,7 @@ namespace MissionList
 
         internal override void Awake()
         {
+            /// once sorted settings out i want to save on destroy so will remove this and reload at next scene, will also likely have GUI changes for different scenes
             DontDestroyOnLoad(this);
             LogFormatted("AddMissionWindow is awake");
         }
@@ -138,9 +140,13 @@ namespace MissionList
 
         void OnGUI()
         {
+            /// call gui window code
             OnDrawAddMission();
         }
 
+        /// <summary>
+        /// GUI window code, creates window for GUI elements to sit in
+        /// </summary>
         public void OnDrawAddMission()
         {
             ///LogFormatted("OnDrawAddMission = fired" + drawaddmission);
@@ -154,14 +160,24 @@ namespace MissionList
             }
         }
 
+        /// <summary>
+        /// draw GUI elements within the created window from OnDrawAddMission()
+        /// </summary>
+        /// <param name="windowId"></param>
         public void OnWindow(int windowId)
         {
+            /// create string input for new mission name
             addmissionstring = GUILayout.TextField(addmissionstring, 25);
+            /// create and if gui add mission button is pressed
             if (GUILayout.Button("Add Mission"))
             {
+                /// change value to stop window being drawn
                 drawaddmission = false;
-                Debug.Log(addmissionstring);
+                /// log mission name in debug
+                LogFormatted("New Mission Created Named: " + addmissionstring);
+                /// add string input to mission list
                 _CareerManager.missionlist.Add(addmissionstring);
+                /// change string back to Mission Name ready for next input
                 addmissionstring = "Mission Name";
             }
 
