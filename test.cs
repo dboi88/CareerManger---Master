@@ -1,72 +1,59 @@
+namespace CareerManager
+{
+    [KSPAddon(KSPAddon.Startup.MainMenu, true)]
+    public class CareerManager : MonoBehaviourExtended
+    {
+        public MissionList missionInstance;
+        public AddMissionWindow addmissionInstance;
+  
+        public void Start()
+        {
+            missionInstance = new MissionList();
+            missionInstance.Start();
+    
+            addmissionInstance = new AddMissionWindow();
+            addmissionInstance.Start();
+    
+        missionInstance.exList.add(addmissionInstance); // give the base class knowledge of the extended class. I've used a list since it sounds like something I'd use more than one of
+    }
+  
+  public void OnGUI()
+  {
+    missionInstance.OnGUI();
+    addmissionInstance.OnGUI();
+  }
+}
+    
+
+namespace MissionList
+{
+    
     public class MissionList : MonoBehaviourExtended
     {
-        public bool drawaddmission = false;
-        void OnGUI()
+      public bool drawaddmission = false;
+      
+      void OnGUI()
         {
-            OnDraw();
-        }
-        private void OnDraw()
-        {
-            /// some code
-        }
-        private void OnWindow(int windowId)
-        {
+            /// gui code that wraps the button
             if (GUILayout.Button("Add Mission"))
             {
                 drawaddmission = true;
-                LogFormatted("on button press " + drawaddmission);
             }
-            if (GUILayout.Button("make addmissionwindow false"))
-            {
-                drawaddmission = false;
-            }
-
-            GUI.DragWindow();
         }
     }
+
     public class AddMissionWindow : MissionList
     {
-        private string addmissionstring = "Mission Name";   
-
-        internal override void Update()
+      if (MissionList.drawaddmission)
+            void OnGUI()
         {
-            LogFormatted("" + drawaddmission);
-        }
-
-        void OnGUI()
-        {
-            {
-                OnDrawAddMission();
+         	if (MissionList.drawaddmission)
+			{
+            ///gui with a string input and wraps a button
+			if (GUILayout.Button("Add Mission"))
+            	{
+               		MissionList.drawaddmission = false;
+            	}
             }
         }
-
-        public void OnDrawAddMission()
-        {
-            ///LogFormatted("OnDrawAddMission = fired" + drawaddmission);
-            if (drawaddmission)
-            {
-                LogFormatted("OnDrawAddMission = true & fired");
-                _addmissionwindowPosition = GUILayout.Window(03, _addmissionwindowPosition, OnWindow, "Title");
-
-                if (_addmissionwindowPosition.x == 0f && -_addmissionwindowPosition.y == 0f)
-                    _addmissionwindowPosition = _addmissionwindowPosition.CenterScreen();
-            }
-        }
-
-        public void OnWindow(int windowId)
-        {
-            addmissionstring = GUILayout.TextField(addmissionstring, 25);
-            if (GUILayout.Button("Add Mission"))
-            {
-                drawaddmission = false;
-                Debug.Log(addmissionstring);
-                missionlist.Add(addmissionstring);
-                addmissionstring = "Mission Name";
-            }
-
-
-            GUI.DragWindow();
-        }
-    }
-
-}
+  }
