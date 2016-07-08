@@ -9,8 +9,15 @@ using UnityEngine;
 namespace CareerManager
 {
     [KSPAddon(KSPAddon.Startup.MainMenu,true)]
-    public class CareerManager : MonoBehaviourExtended
+    public class _CareerManager : MonoBehaviourExtended
     {
+        /// create mission list
+        public static List<String> missionlist = new List<String>();
+
+
+
+
+
         internal override void Awake()
         {
             LogFormatted("Parent is awake");

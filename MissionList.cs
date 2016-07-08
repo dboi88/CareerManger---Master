@@ -5,17 +5,16 @@ using System.Text;
 using CareerManager.RectExtensions;
 using KSPPluginFramework;
 using UnityEngine;
+using CareerManager;
 
 namespace MissionList
 {
     [KSPAddon(KSPAddon.Startup.MainMenu, true)]
-    public class MissionList : MonoBehaviourExtended
+    public class _MissionList : MonoBehaviourExtended
     {
 
         // create window position object as a new rect value
         private static Rect _missionlistPosition = new Rect();
-        /// create mission list
-        public List<String> missionlist = new List<String>();
         /// create mission toggle value
         private bool _missionToggle = false;
         /// create add mission window draw value
@@ -64,7 +63,7 @@ namespace MissionList
         private void OnWindow(int windowId)
         {
             GUILayout.BeginVertical();
-            foreach (String mission in missionlist)
+            foreach (String mission in _CareerManager.missionlist)
             {
                 GUILayout.BeginVertical();
                 GUILayout.BeginHorizontal();
@@ -114,12 +113,14 @@ namespace MissionList
 
 
     [KSPAddon(KSPAddon.Startup.MainMenu, true)]
-    public class AddMissionWindow : MissionList
+    public class _AddMissionWindow : _MissionList
     {
         // create window position object as a new rect value
         private static Rect _addmissionwindowPosition = new Rect();
         /// create string to show in add mission text box on first load
         private string addmissionstring = "Mission Name";
+        /// temporary toggle value, will be removed when set up settings files for each mission
+        private bool _missionToggle = false;
 
 
         internal override void Awake()
@@ -132,7 +133,7 @@ namespace MissionList
 
         internal override void Update()
         {
-            LogFormatted("" + MissionList.drawaddmission);
+            LogFormatted("" + _MissionList.drawaddmission);
         }
 
         void OnGUI()
@@ -145,10 +146,10 @@ namespace MissionList
         public void OnDrawAddMission()
         {
             ///LogFormatted("OnDrawAddMission = fired" + drawaddmission);
-            if (MissionList.drawaddmission)
+            if (_MissionList.drawaddmission)
             {
                 LogFormatted("OnDrawAddMission = true & fired");
-                _addmissionwindowPosition = GUILayout.Window(03, _addmissionwindowPosition, OnWindow, "Title");
+                _addmissionwindowPosition = GUILayout.Window(03, _addmissionwindowPosition, OnWindow, "New Mission");
 
                 if (_addmissionwindowPosition.x == 0f && -_addmissionwindowPosition.y == 0f)
                     _addmissionwindowPosition = _addmissionwindowPosition.CenterScreen();
@@ -160,9 +161,9 @@ namespace MissionList
             addmissionstring = GUILayout.TextField(addmissionstring, 25);
             if (GUILayout.Button("Add Mission"))
             {
-                MissionList.drawaddmission = false;
+                _MissionList.drawaddmission = false;
                 Debug.Log(addmissionstring);
-                missionlist.Add(addmissionstring);
+                _CareerManager.missionlist.Add(addmissionstring);
                 addmissionstring = "Mission Name";
             }
 
