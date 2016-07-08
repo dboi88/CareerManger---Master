@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace MissionList
 {
-    [KSPAddon(KSPAddon.Startup.MainMenu,true)]
+    ///[KSPAddon(KSPAddon.Startup.MainMenu,true)]
     public class WindowTemplate : MonoBehaviourExtended
     {
         // create window position object as a new rect value

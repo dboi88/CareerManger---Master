@@ -25,12 +25,6 @@ namespace CareerManager
 
 
 
-
-
-
-
-
-
         private Int32 intCounter=0;
         internal override void RepeatingWorker()
         {

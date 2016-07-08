@@ -19,18 +19,7 @@ namespace MissionList
         /// create mission toggle value
         private bool _missionToggle = false;
         /// create add mission window draw value
-        public bool drawaddmission = false;
-
-        protected bool Getdrawaddmission()
-        {
-            if (drawaddmission)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
+        public static bool drawaddmission = false;
 
         internal override void Awake()
         {
@@ -108,15 +97,7 @@ namespace MissionList
                 drawaddmission = true;
                 LogFormatted("on button press " + drawaddmission);
             }
-            if (GUILayout.Button("make addmission window false"))
-            {
-                drawaddmission = false;
-            }
-            if (GUILayout.Button("make addmission window true"))
-            {
-                drawaddmission = true;
-            }
-
+            
             GUI.DragWindow();
         }
 
@@ -151,7 +132,7 @@ namespace MissionList
 
         internal override void Update()
         {
-            LogFormatted("" + Getdrawaddmission());
+            LogFormatted("" + MissionList.drawaddmission);
         }
 
         void OnGUI()
@@ -164,7 +145,7 @@ namespace MissionList
         public void OnDrawAddMission()
         {
             ///LogFormatted("OnDrawAddMission = fired" + drawaddmission);
-            if (Getdrawaddmission())
+            if (MissionList.drawaddmission)
             {
                 LogFormatted("OnDrawAddMission = true & fired");
                 _addmissionwindowPosition = GUILayout.Window(03, _addmissionwindowPosition, OnWindow, "Title");
@@ -179,7 +160,7 @@ namespace MissionList
             addmissionstring = GUILayout.TextField(addmissionstring, 25);
             if (GUILayout.Button("Add Mission"))
             {
-                drawaddmission = false;
+                MissionList.drawaddmission = false;
                 Debug.Log(addmissionstring);
                 missionlist.Add(addmissionstring);
                 addmissionstring = "Mission Name";
