@@ -6,6 +6,7 @@ using CareerManager.RectExtensions;
 using KSPPluginFramework;
 using UnityEngine;
 using CareerManager;
+using KSP.IO;
 
 namespace MissionList
 {
@@ -23,7 +24,11 @@ namespace MissionList
 
         internal override void Awake()
         {
-            DontDestroyOnLoad(this);
+            /// comment out so that i can test saving settings on destroy
+            ///DontDestroyOnLoad(this);
+            PluginConfiguration config = PluginConfiguration.CreateForType<_MissionList>();
+            config.load();
+            _missionlistPosition = config.GetValue<Rect>("Mission List Position");
         }
 
         internal override void Start()
@@ -105,6 +110,10 @@ namespace MissionList
 
         internal override void OnDestroy()
         {
+            PluginConfiguration config = PluginConfiguration.CreateForType<_MissionList>();
+            config.SetValue("Mission List Position", _missionlistPosition);
+            config.save();
+            LogFormatted("OnDestroy Triggered");
         }
     }
 
@@ -133,10 +142,6 @@ namespace MissionList
             LogFormatted("AddMissionWindow is awake");
         }
 
-
-        internal override void Update()
-        {
-        }
 
         void OnGUI()
         {
@@ -168,6 +173,7 @@ namespace MissionList
         {
             /// create string input for new mission name
             addmissionstring = GUILayout.TextField(addmissionstring, 25);
+            GUILayout.BeginHorizontal();
             /// create and if gui add mission button is pressed
             if (GUILayout.Button("Add Mission"))
             {
@@ -180,6 +186,16 @@ namespace MissionList
                 /// change string back to Mission Name ready for next input
                 addmissionstring = "Mission Name";
             }
+            if (GUILayout.Button("Cancel"))
+            {
+                /// change value to stop window being drawn
+                drawaddmission = false;
+                /// log mission name in debug
+                LogFormatted("New Mission Creation Cancelled" + addmissionstring);
+                /// change string back to Mission Name ready for next input
+                addmissionstring = "Mission Name";
+            }
+            GUILayout.EndHorizontal();
 
 
             GUI.DragWindow();
