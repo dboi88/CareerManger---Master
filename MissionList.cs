@@ -9,9 +9,10 @@ using CareerManager;
 
 namespace MissionList
 {
-    [KSPAddon(KSPAddon.Startup.MainMenu, true)]
+    ///[KSPAddon(KSPAddon.Startup.MainMenu, true)]
     public class _MissionList : MonoBehaviourExtended
     {
+        
 
         // create window position object as a new rect value
         private static Rect _missionlistPosition = new Rect();
@@ -32,7 +33,6 @@ namespace MissionList
 
         internal override void Update()
         {
-            LogFormatted("" + drawaddmission);
         }
 
         internal override void LateUpdate()
@@ -41,6 +41,7 @@ namespace MissionList
 
         void OnGUI()
         {
+            if (!_CareerManager._hasInitStyles) _GUISkins.InitStyles();
             /// calls OnDraw method to draw GUI
             OnDraw();
         }
@@ -53,7 +54,7 @@ namespace MissionList
                 HighLogic.LoadedScene == GameScenes.TRACKSTATION)
             {
                 ///Debug.Log(HighLogic.LoadedScene);
-                _missionlistPosition = GUILayout.Window(02, _missionlistPosition, OnWindow, "Mission List");
+                _missionlistPosition = GUILayout.Window(02, _missionlistPosition, OnWindow, "Mission List", _GUISkins._windowStyle);
 
                 if (_missionlistPosition.x == 0f && -_missionlistPosition.y == 0f)
                     _missionlistPosition = _missionlistPosition.CenterScreen();
@@ -67,7 +68,7 @@ namespace MissionList
             {
                 GUILayout.BeginVertical();
                 GUILayout.BeginHorizontal();
-                GUILayout.Label(mission);
+                GUILayout.Label(mission, _GUISkins._missionnameStyle);
                 _missionToggle = GUILayout.Toggle(_missionToggle, "");
                 GUILayout.EndHorizontal();
                 GUILayout.Space(3f);
@@ -100,6 +101,8 @@ namespace MissionList
             GUI.DragWindow();
         }
 
+        
+
         internal override void OnDestroy()
         {
         }
@@ -112,7 +115,7 @@ namespace MissionList
 
 
 
-    [KSPAddon(KSPAddon.Startup.MainMenu, true)]
+    ///[KSPAddon(KSPAddon.Startup.MainMenu, true)]
     public class _AddMissionWindow : _MissionList
     {
         // create window position object as a new rect value
@@ -120,27 +123,22 @@ namespace MissionList
         /// create string to show in add mission text box on first load
         private string addmissionstring = "Mission Name";
         /// temporary toggle value, will be removed when set up settings files for each mission
-        private bool _missionToggle = false;
 
 
         internal override void Awake()
         {
             DontDestroyOnLoad(this);
             LogFormatted("AddMissionWindow is awake");
-
         }
 
 
         internal override void Update()
         {
-            LogFormatted("" + _MissionList.drawaddmission);
         }
 
         void OnGUI()
         {
-            {
-                OnDrawAddMission();
-            }
+            OnDrawAddMission();
         }
 
         public void OnDrawAddMission()
@@ -149,7 +147,7 @@ namespace MissionList
             if (_MissionList.drawaddmission)
             {
                 LogFormatted("OnDrawAddMission = true & fired");
-                _addmissionwindowPosition = GUILayout.Window(03, _addmissionwindowPosition, OnWindow, "New Mission");
+                _addmissionwindowPosition = GUILayout.Window(03, _addmissionwindowPosition, OnWindow, "New Mission", _GUISkins._windowStyle);
 
                 if (_addmissionwindowPosition.x == 0f && -_addmissionwindowPosition.y == 0f)
                     _addmissionwindowPosition = _addmissionwindowPosition.CenterScreen();
@@ -161,7 +159,7 @@ namespace MissionList
             addmissionstring = GUILayout.TextField(addmissionstring, 25);
             if (GUILayout.Button("Add Mission"))
             {
-                _MissionList.drawaddmission = false;
+                drawaddmission = false;
                 Debug.Log(addmissionstring);
                 _CareerManager.missionlist.Add(addmissionstring);
                 addmissionstring = "Mission Name";
