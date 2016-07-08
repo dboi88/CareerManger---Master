@@ -6,9 +6,9 @@ using CareerManager.RectExtensions;
 using KSPPluginFramework;
 using UnityEngine;
 
-namespace windowtemplate
+namespace MissionList
 {
-    [KSPAddon(KSPAddon.Startup.MainMenu,true)]
+    ///[KSPAddon(KSPAddon.Startup.MainMenu,true)]
     public class WindowTemplate : MonoBehaviourExtended
     {
         // create window position object as a new rect value
@@ -31,7 +31,7 @@ namespace windowtemplate
 
         private void OnDraw()
         {
-            _mainwindowPosition = GUILayout.Window(10, _mainwindowPosition, OnWindow, "Title");
+            _mainwindowPosition = GUILayout.Window(01, _mainwindowPosition, OnWindow, "Title");
 
             if (_mainwindowPosition.x == 0f && -_mainwindowPosition.y == 0f)
                 _mainwindowPosition = _mainwindowPosition.CenterScreen();
