@@ -17,6 +17,8 @@ namespace CareerManager
     {
         /// create mission list
         public static List<String> missionlist = new List<String>();
+        /// create mission view toggle list
+        public static Dictionary<string, bool> missionviewlist = new Dictionary<string, bool>();
         /// create boolian to record if styles have been set or not and set false to start
         public static bool _hasInitStyles = false;
         

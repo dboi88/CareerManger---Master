@@ -21,6 +21,8 @@ namespace MissionList
         private bool _missionToggle = false;
         /// create add mission window draw value
         public static bool drawaddmission = false;
+        /// creae scroll view position for mission list
+        public Vector2 scrollPosition;
 
         internal override void Awake()
         {
@@ -29,6 +31,9 @@ namespace MissionList
             PluginConfiguration config = PluginConfiguration.CreateForType<_MissionList>();
             config.load();
             _missionlistPosition = config.GetValue<Rect>("Mission List Position");
+                {
+
+            }
         }
 
         internal override void Start()
@@ -63,46 +68,69 @@ namespace MissionList
 
                 if (_missionlistPosition.x == 0f && -_missionlistPosition.y == 0f)
                     _missionlistPosition = _missionlistPosition.CenterScreen();
+                 
             }
         }
 
         private void OnWindow(int windowId)
         {
-            GUILayout.BeginVertical();
-            foreach (String mission in _CareerManager.missionlist)
+            scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.Width(340), GUILayout.Height(600));
+            foreach (KeyValuePair<string, bool> pair in _CareerManager.missionviewlist)
             {
                 GUILayout.BeginVertical();
                 GUILayout.BeginHorizontal();
-                GUILayout.Label(mission, _GUISkins._missionnameStyle);
-                _missionToggle = GUILayout.Toggle(_missionToggle, "");
+                GUILayout.Label(pair.Key, _GUISkins._missionnameStyle);
+                if (GUILayout.Button("Show"))
+                {
+                    _CareerManager.missionviewlist[pair.Key] = true;
+                    LogFormatted("Show" + pair.Key);
+                }
+                if (GUILayout.Button("Hide"))
+                {
+                    _CareerManager.missionviewlist[pair.Key] = false;
+                    LogFormatted("Hide" + pair.Key);
+                }
+                if (GUILayout.Button("Delete Mission"))
+                {
+                    _CareerManager.missionviewlist.Remove(pair.Key);
+                    LogFormatted("Delete Mission" + pair.Key);
+                }
                 GUILayout.EndHorizontal();
                 GUILayout.Space(3f);
-                GUILayout.BeginHorizontal();
-                GUILayout.Label("Add:");
-                GUILayout.Button("Contract");
-                GUILayout.Button("Objective");
-                GUILayout.Button("Ship");
-                GUILayout.EndHorizontal();
-                GUILayout.Space(3f);
-                GUILayout.Label("Contracts:");
-                GUILayout.Label("Objectives:");
-                GUILayout.Label("Ships:");
-                GUILayout.BeginHorizontal();
-                GUILayout.Label("Advance: \u221A");
-                GUILayout.Label("Cost: \u221A");
-                GUILayout.Label("Profit: \u221A");
-                GUILayout.EndHorizontal();
-                GUILayout.Label("---------------------------------------------------------------------");
-                GUILayout.Space(7f);
                 GUILayout.EndVertical();
+                if (pair.Value)
+                {
+                    GUILayout.BeginVertical();
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label("Add:");
+                    GUILayout.Button("Contract");
+                    GUILayout.Button("Objective");
+                    GUILayout.Button("Ship");
+                    GUILayout.EndHorizontal();
+                    GUILayout.Space(3f);
+                    GUILayout.Label("Contracts:");
+                    GUILayout.Label("Objectives:");
+                    GUILayout.Label("Ships:");
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label("Advance: \u221A");
+                    GUILayout.Label("Cost: \u221A");
+                    GUILayout.Label("Profit: \u221A");
+                    GUILayout.EndHorizontal();
+                    GUILayout.Label("---------------------------------------------------------------------");
+                    GUILayout.Space(7f);
+                    GUILayout.EndVertical();
+                }
+                
             }
-            GUILayout.EndVertical();
+            GUILayout.EndScrollView();
+            GUILayout.BeginVertical();
             if (GUILayout.Button("Add Mission"))
             {
                 drawaddmission = true;
                 LogFormatted("on button press " + drawaddmission);
             }
-            
+            GUILayout.EndVertical();
+
             GUI.DragWindow();
         }
 
@@ -132,8 +160,6 @@ namespace MissionList
         private static Rect _addmissionwindowPosition = new Rect();
         /// create string to show in add mission text box on first load
         private string addmissionstring = "Mission Name";
-        /// temporary toggle value, will be removed when set up settings files for each mission
-
 
         internal override void Awake()
         {
@@ -183,6 +209,8 @@ namespace MissionList
                 LogFormatted("New Mission Created Named: " + addmissionstring);
                 /// add string input to mission list
                 _CareerManager.missionlist.Add(addmissionstring);
+                /// add dictionary value including view toggle as true
+                _CareerManager.missionviewlist.Add(addmissionstring, true);
                 /// change string back to Mission Name ready for next input
                 addmissionstring = "Mission Name";
             }
